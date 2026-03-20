@@ -49,7 +49,7 @@ The configuration includes several enhancements for a better shell experience:
 - **Greeting**: Displays system information using `fastfetch` if available.
 - **Pager**: Sets `MANPAGER` to `batcat` for syntax-highlighted manual pages.
 - **History Helpers**: Includes custom `!!` (repeat last command) and `!$` (last argument of last command) bindings.
-- **Path**: Automatically adds `~/.local/bin` and `/usr/local/bin` to your `PATH`.
+- **Path**: Automatically adds `~/.local/bin` and `~/Applications/depot_tools` to your `PATH` when present.
 - **Tool Activations**: Automatically activates `mise` if it is installed.
 - **SSH Agent**: Configures `SSH_AUTH_SOCK` for persistent SSH agent sessions.
 
