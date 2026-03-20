@@ -135,5 +135,8 @@ if command -q hwinfo
     alias hw='hwinfo --short'
 end
 alias please='sudo'
+alias update='sudo apt update && sudo apt upgrade -y'
+alias cleanup='sudo apt autoremove -y && sudo apt autoclean'
+alias grubup='sudo update-grub'
 alias tb='nc termbin.com 9999'
 alias jctl='journalctl -p 3 -xb'
