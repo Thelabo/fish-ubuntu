@@ -1,0 +1,20 @@
+- name: Check if mise is installed
+  ansible.builtin.command: which mise
+  register: mise_check
+  failed_when: false
+  changed_when: false
+
+- name: Install mise via official installer
+  ansible.builtin.shell:
+    cmd: curl https://mise.jdx.dev/install.sh | sh
+  environment:
+    INSTALL_DIR: "{{ ansible_facts['user_dir'] }}/.local/bin"
+  when: mise_check.rc != 0
+  changed_when: true
+
+- name: Install mise tools
+  ansible.builtin.command:
+    cmd: "mise install {{ item }}"
+  loop: "{{ mise_tools }}"
+  when: mise_tools | length > 0
+  changed_when: true

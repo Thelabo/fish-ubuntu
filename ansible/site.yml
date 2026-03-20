@@ -1,0 +1,17 @@
+- name: Configure local Ubuntu machine for Fish setup
+  hosts: local
+  vars_files:
+    - vars/packages.yml
+
+  tasks:
+    - name: Include Fish PPA tasks
+      ansible.builtin.include_tasks: tasks/fish-ppa.yml
+
+    - name: Include package installation tasks
+      ansible.builtin.include_tasks: tasks/packages.yml
+
+    - name: Include mise bootstrap tasks
+      ansible.builtin.include_tasks: tasks/mise.yml
+
+    - name: Include optional done.fish tasks
+      ansible.builtin.include_tasks: tasks/done.yml

@@ -1,0 +1,17 @@
+# Ubuntu apt packages for Fish shell setup
+apt_packages:
+  - fish
+  - eza
+  - bat
+  - fastfetch
+  - git
+
+# Optional packages (used only if needed)
+# hwinfo is optional — add if user wants hw alias
+# hwinfo_optional: false  (comment/document as optional)
+
+# Install done.fish via Fisher (opt-in)
+install_done_fish: false
+
+# mise tools to install globally (if any)
+mise_tools: []

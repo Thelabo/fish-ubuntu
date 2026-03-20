@@ -1,0 +1,20 @@
+# Check current fish version; add PPA if < 4.0
+- name: Check installed fish version
+  ansible.builtin.command: fish --version
+  register: fish_version_result
+  failed_when: false
+  changed_when: false
+
+- name: Add Fish shell PPA (ppa:fish-shell/release-4)
+  ansible.builtin.apt_repository:
+    repo: ppa:fish-shell/release-4
+    state: present
+  become: true
+  when: fish_version_result.rc != 0 or fish_version_result.stdout is not search("fish, version 4")
+
+- name: Install fish from PPA
+  ansible.builtin.apt:
+    name: fish
+    state: present
+    update_cache: true
+  become: true
