@@ -10,8 +10,14 @@
     - name: Include package installation tasks
       ansible.builtin.include_tasks: tasks/packages.yml
 
+    - name: Include latest tool installation tasks
+      ansible.builtin.include_tasks: tasks/latest-tools.yml
+
     - name: Include mise bootstrap tasks
       ansible.builtin.include_tasks: tasks/mise.yml
+
+    - name: Include Fisher plugin tasks
+      ansible.builtin.include_tasks: tasks/fisher.yml
 
     - name: Include optional done.fish tasks
       ansible.builtin.include_tasks: tasks/done.yml

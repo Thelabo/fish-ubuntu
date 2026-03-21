@@ -1,0 +1,17 @@
+- name: Ensure Fisher plugin manager is installed
+  when: install_done_fish | default(false) or install_fish_pure | default(true) or install_fish_autopair | default(true)
+  ansible.builtin.shell:
+    cmd: fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher"
+  changed_when: true
+
+- name: Install pure prompt via Fisher
+  when: install_fish_pure | default(true)
+  ansible.builtin.shell:
+    cmd: fish -c "fisher install pure-fish/pure"
+  changed_when: true
+
+- name: Install autopair plugin via Fisher
+  when: install_fish_autopair | default(true)
+  ansible.builtin.shell:
+    cmd: fish -c "fisher install jorgebucaran/autopair.fish"
+  changed_when: true

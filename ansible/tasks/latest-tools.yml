@@ -1,0 +1,69 @@
+- name: Install eza from official upstream repository
+  when: latest_tools_enabled | default(true)
+  block:
+    - name: Ensure apt keyrings directory exists
+      ansible.builtin.file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: "0755"
+      become: true
+
+    - name: Add eza GPG key
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/eza-community/eza/main/deb.asc
+        dest: /etc/apt/keyrings/gierens.gpg
+        mode: "0644"
+      become: true
+
+    - name: Add eza apt repository
+      ansible.builtin.apt_repository:
+        repo: "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main"
+        state: present
+        filename: gierens
+      become: true
+
+    - name: Install eza package
+      ansible.builtin.apt:
+        name: eza
+        state: present
+        update_cache: true
+      become: true
+
+- name: Add fastfetch PPA
+  when: latest_tools_enabled | default(true)
+  ansible.builtin.apt_repository:
+    repo: "ppa:zhangsongcui3371/fastfetch"
+    state: present
+    update_cache: true
+  become: true
+
+- name: Install fastfetch from PPA
+  when: latest_tools_enabled | default(true)
+  ansible.builtin.apt:
+    name: fastfetch
+    state: latest
+  become: true
+
+- name: Install latest bat from GitHub release
+  when: latest_tools_enabled | default(true)
+  block:
+    - name: Get latest bat release metadata
+      ansible.builtin.uri:
+        url: https://api.github.com/repos/sharkdp/bat/releases/latest
+        return_content: true
+      register: bat_release
+
+    - name: Select bat Debian package asset
+      ansible.builtin.set_fact:
+        bat_deb_url: "{{ (bat_release.json.assets | selectattr('name', 'search', '^bat_.*_amd64\\.deb$') | list | first).browser_download_url }}"
+
+    - name: Download bat Debian package
+      ansible.builtin.get_url:
+        url: "{{ bat_deb_url }}"
+        dest: /tmp/bat_latest_amd64.deb
+        mode: "0644"
+
+    - name: Install bat Debian package
+      ansible.builtin.apt:
+        deb: /tmp/bat_latest_amd64.deb
+      become: true
