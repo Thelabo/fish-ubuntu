@@ -2,6 +2,7 @@ apt_packages:
   - fish
   - git
   - curl
+  - hwinfo
 
 latest_tools_enabled: true
 
