@@ -11,7 +11,7 @@ stow_dotfiles: true
 set_fish_default_shell: true
 eza_apt_key_sha256: "e29f5112e4d5553a49140bbdbcff23c6c3756cb451c15752bf8e9e7a9e0af1d2"
 mise_apt_key_sha256: "91c72340c5cc84ae2ba98c1070083feacf789b0a4a3d34b2416147769e475d96"
-fisher_version: "4.4.8"
+fisher_ref: "a04308be92daa6cfecdbb0ca58b1e8508664cff2"
 fisher_bootstrap_sha256: "0fb6c81ae3003e95b5671766fa6c25c3597066e29965b7772f6c1b007387356d"
 pure_fish_ref: "28b727f6c20fdf75942c6041e8701f805a33e615"
 autopair_fish_ref: "244bb1ebf74bf944a1ba1338fc1026075003c5e3"

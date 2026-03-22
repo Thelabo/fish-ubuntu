@@ -16,4 +16,4 @@
     - name: Apply stow links from repository root
       ansible.builtin.command:
         cmd: "stow --dir {{ playbook_dir }}/.. --target {{ ansible_facts['user_dir'] }} --restow .config"
-      changed_when: true
+      changed_when: false

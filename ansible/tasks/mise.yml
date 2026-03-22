@@ -49,6 +49,6 @@
 - name: Install mise tools
   ansible.builtin.command:
     cmd: "mise install {{ item }}"
+    creates: "{{ ansible_facts['user_dir'] }}/.local/share/mise/installs/{{ item.split('@')[0] }}/{{ item.split('@')[1] }}"
   loop: "{{ mise_tools }}"
   when: mise_tools | length > 0
-  changed_when: true

@@ -10,7 +10,7 @@
 
     - name: Add eza GPG key
       ansible.builtin.get_url:
-        url: https://raw.githubusercontent.com/eza-community/eza/main/deb.asc
+        url: https://raw.githubusercontent.com/eza-community/eza/1cff499f7c8c5b42c700a2c7afd2fb3a38e9c29a/deb.asc
         dest: /etc/apt/keyrings/gierens.asc
         mode: "0644"
         checksum: "sha256:{{ eza_apt_key_sha256 }}"

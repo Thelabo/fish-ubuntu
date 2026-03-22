@@ -1,5 +1,5 @@
 - name: Install done.fish via Fisher
+  become: false
   ansible.builtin.command:
     cmd: fish -c "fisher install franciscolourenco/done@{{ done_fish_ref }}"
   when: install_done_fish | default(false)
-  changed_when: true
