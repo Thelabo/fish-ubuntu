@@ -54,6 +54,12 @@ stow --dir <repo-root> --target "$HOME" --restow .config
 
 This keeps `~/.config/fish` sourced from the repo structure while remaining easy to re-apply.
 
+If your clone path differs, set `stow_repo_dir` to your repo root, for example:
+
+```bash
+ansible-playbook ansible/site.yml -i ansible/inventory.ini -e stow_repo_dir=~/git/ubuntu-fish --ask-become-pass
+```
+
 ## Fish plugins
 
 Plugins are installed through Fisher by the playbook:
@@ -84,6 +90,7 @@ Optional toggles (defaults shown):
 - `latest_tools_enabled=true`
 - `install_fastfetch_from_ppa=false`
 - `stow_dotfiles=true`
+- `stow_repo_dir={{ playbook_dir }}/..`
 - `set_fish_default_shell=true`
 - `install_fish_pure=true`
 - `install_fish_autopair=true`

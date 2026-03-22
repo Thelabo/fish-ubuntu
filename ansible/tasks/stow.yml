@@ -1,6 +1,17 @@
 - name: Stow fish dotfiles into home
   when: stow_dotfiles | default(false)
   block:
+    - name: Verify configured stow repository contains fish config
+      ansible.builtin.stat:
+        path: "{{ (stow_repo_dir | default(playbook_dir ~ '/..')) ~ '/.config/fish/config.fish' }}"
+      register: stow_repo_config
+
+    - name: Fail when stow repository path is invalid
+      ansible.builtin.assert:
+        that:
+          - stow_repo_config.stat.exists
+        fail_msg: "stow_repo_dir must point to your repo root (example: ~/git/ubuntu-fish)."
+
     - name: Ensure ~/.config exists before stow
       ansible.builtin.file:
         path: "{{ ansible_facts['user_dir'] }}/.config"
@@ -15,5 +26,5 @@
 
     - name: Apply stow links from repository root
       ansible.builtin.command:
-        cmd: "stow --dir {{ playbook_dir }}/.. --target {{ ansible_facts['user_dir'] }} --restow .config"
+        cmd: "stow --dir {{ stow_repo_dir | default(playbook_dir ~ '/..') }} --target {{ ansible_facts['user_dir'] }} --restow .config"
       changed_when: false
