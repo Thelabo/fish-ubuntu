@@ -68,13 +68,13 @@ The playbook pins Fisher bootstrap and plugin refs to immutable commit SHAs for 
 
 ```bash
 sudo apt install -y ansible
-ansible-playbook ansible/site.yml --ask-become-pass
+ansible-playbook ansible/site.yml -i ansible/inventory.ini --ask-become-pass
 ```
 
 Optional done.fish:
 
 ```bash
-ansible-playbook ansible/site.yml -e install_done_fish=true --ask-become-pass
+ansible-playbook ansible/site.yml -i ansible/inventory.ini -e install_done_fish=true --ask-become-pass
 ```
 
 Optional toggles (defaults shown):
