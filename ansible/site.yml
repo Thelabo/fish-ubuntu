@@ -13,6 +13,9 @@
     - name: Include stow dotfile linking tasks
       ansible.builtin.include_tasks: tasks/stow.yml
 
+    - name: Include default shell tasks
+      ansible.builtin.include_tasks: tasks/default-shell.yml
+
     - name: Include latest tool installation tasks
       ansible.builtin.include_tasks: tasks/latest-tools.yml
 

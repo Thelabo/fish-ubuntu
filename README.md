@@ -71,6 +71,8 @@ sudo apt install -y ansible
 ansible-playbook ansible/site.yml -i ansible/inventory.ini --ask-become-pass
 ```
 
+By default, the playbook also sets your login shell to Fish for the current user.
+
 Optional done.fish:
 
 ```bash
@@ -82,6 +84,7 @@ Optional toggles (defaults shown):
 - `latest_tools_enabled=true`
 - `install_fastfetch_from_ppa=false`
 - `stow_dotfiles=true`
+- `set_fish_default_shell=true`
 - `install_fish_pure=true`
 - `install_fish_autopair=true`
 - `install_done_fish=false`

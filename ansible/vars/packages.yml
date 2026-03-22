@@ -8,6 +8,7 @@ apt_packages:
 latest_tools_enabled: true
 install_fastfetch_from_ppa: false
 stow_dotfiles: true
+set_fish_default_shell: true
 eza_apt_key_sha256: "e29f5112e4d5553a49140bbdbcff23c6c3756cb451c15752bf8e9e7a9e0af1d2"
 mise_apt_key_sha256: "91c72340c5cc84ae2ba98c1070083feacf789b0a4a3d34b2416147769e475d96"
 fisher_version: "4.4.8"
