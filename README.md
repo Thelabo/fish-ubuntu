@@ -25,7 +25,7 @@ sudo add-apt-repository -y ppa:fish-shell/release-4
 sudo apt update
 sudo apt install -y fish
 
-git clone https://github.com/youruser/fish-ubuntu.git ~/git/fish-ubuntu
+git clone https://github.com/Thelabo/fish-ubuntu.git ~/git/fish-ubuntu
 mkdir -p ~/.config/fish
 ln -sf ~/git/fish-ubuntu/.config/fish/config.fish ~/.config/fish/config.fish
 ln -sfn ~/git/fish-ubuntu/.config/fish/conf.d ~/.config/fish/conf.d
