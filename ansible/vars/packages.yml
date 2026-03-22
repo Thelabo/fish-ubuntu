@@ -19,6 +19,9 @@ done_fish_ref: "998ad4f5fc9cee36c09840a7e635b56428e554f9"
 bat_version: "0.26.1"
 bat_deb_url: "https://github.com/sharkdp/bat/releases/download/v0.26.1/bat_0.26.1_amd64.deb"
 bat_deb_sha256: "ad59954aa1540e526f97267f60557ea5ef4c7dcf91a0811254134537cb353a3c"
+fastfetch_version: "2.60.0"
+fastfetch_deb_url: "https://github.com/fastfetch-cli/fastfetch/releases/download/2.60.0/fastfetch-linux-amd64.deb"
+fastfetch_deb_sha256: "f24aa1187c544250177d1329a7abc0c31ee9f06ec8e6cbba1ad57a2ddc4eec25"
 
 install_done_fish: false
 

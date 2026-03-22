@@ -45,6 +45,21 @@
     state: present
   become: true
 
+- name: Install pinned fastfetch from GitHub release
+  when: latest_tools_enabled | default(true) and not (install_fastfetch_from_ppa | default(false))
+  block:
+    - name: Download fastfetch Debian package
+      ansible.builtin.get_url:
+        url: "{{ fastfetch_deb_url }}"
+        dest: "/tmp/fastfetch_{{ fastfetch_version }}_amd64.deb"
+        mode: "0644"
+        checksum: "sha256:{{ fastfetch_deb_sha256 }}"
+
+    - name: Install fastfetch Debian package
+      ansible.builtin.apt:
+        deb: "/tmp/fastfetch_{{ fastfetch_version }}_amd64.deb"
+      become: true
+
 - name: Install pinned bat from GitHub release
   when: latest_tools_enabled | default(true)
   block:

@@ -38,7 +38,7 @@ chsh -s "$(which fish)"
 To avoid stale LTS package versions:
 
 - `eza`: install from upstream apt repo (`deb.gierens.de`) with scoped apt key (`signed-by`)
-- `fastfetch`: optional upstream-author PPA (`ppa:zhangsongcui3371/fastfetch`), disabled by default for stricter trust
+- `fastfetch`: install pinned `.deb` from GitHub releases with SHA256 verification (optional PPA remains available)
 - `bat`: install pinned `.deb` from GitHub releases with SHA256 verification
 - `mise`: install from official signed apt repository (`https://mise.jdx.dev/deb`)
 
