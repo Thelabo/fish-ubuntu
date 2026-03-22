@@ -37,10 +37,10 @@ chsh -s "$(which fish)"
 
 To avoid stale LTS package versions:
 
-- `eza`: install from upstream apt repo (`deb.gierens.de`)
-- `fastfetch`: install from upstream-author PPA (`ppa:zhangsongcui3371/fastfetch`)
-- `bat`: install latest `.deb` from GitHub releases
-- `mise`: install via official installer (`https://mise.jdx.dev/install.sh`)
+- `eza`: install from upstream apt repo (`deb.gierens.de`) with scoped apt key (`signed-by`)
+- `fastfetch`: optional upstream-author PPA (`ppa:zhangsongcui3371/fastfetch`), disabled by default for stricter trust
+- `bat`: install pinned `.deb` from GitHub releases with SHA256 verification
+- `mise`: install from official signed apt repository (`https://mise.jdx.dev/deb`)
 
 These are automated in the Ansible playbook.
 
@@ -51,6 +51,8 @@ Plugins are installed through Fisher by the playbook:
 - `pure-fish/pure` (prompt)
 - `jorgebucaran/autopair.fish`
 - optional: `franciscolourenco/done`
+
+The playbook pins Fisher bootstrap and plugin refs to immutable commit SHAs for reproducible installs.
 
 ## Ansible Bootstrap
 
@@ -68,6 +70,7 @@ ansible-playbook ansible/site.yml -e install_done_fish=true --ask-become-pass
 Optional toggles (defaults shown):
 
 - `latest_tools_enabled=true`
+- `install_fastfetch_from_ppa=false`
 - `install_fish_pure=true`
 - `install_fish_autopair=true`
 - `install_done_fish=false`

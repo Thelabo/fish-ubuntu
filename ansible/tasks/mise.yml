@@ -4,13 +4,47 @@
   failed_when: false
   changed_when: false
 
-- name: Install mise via official installer
-  ansible.builtin.shell:
-    cmd: curl https://mise.jdx.dev/install.sh | sh
-  environment:
-    INSTALL_DIR: "{{ ansible_facts['user_dir'] }}/.local/bin"
+- name: Install mise via official signed apt repository
   when: mise_check.rc != 0
-  changed_when: true
+  become: true
+  block:
+    - name: Ensure apt keyrings directory exists for mise key
+      ansible.builtin.file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: "0755"
+
+    - name: Add mise apt repository GPG key
+      ansible.builtin.get_url:
+        url: https://mise.jdx.dev/gpg-key.pub
+        dest: /etc/apt/keyrings/mise-archive-keyring.asc
+        mode: "0644"
+        checksum: "sha256:{{ mise_apt_key_sha256 }}"
+
+    - name: Add mise apt repository
+      ansible.builtin.apt_repository:
+        repo: "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.asc] https://mise.jdx.dev/deb stable main"
+        state: present
+        filename: mise
+
+    - name: Install mise package
+      ansible.builtin.apt:
+        name: mise
+        state: present
+        update_cache: true
+
+- name: Install mise tools
+  vars:
+    mise_tools_pattern: '^[A-Za-z0-9._-]+@[A-Za-z0-9._-]+$'
+  ansible.builtin.assert:
+    that:
+      - item is regex(mise_tools_pattern)
+      - "'latest' not in item"
+      - "'/' not in item"
+      - "':' not in item"
+    fail_msg: "mise_tools entries must be pinned as tool@version with no URL, no path, and no 'latest'."
+  loop: "{{ mise_tools }}"
+  when: mise_tools | length > 0
 
 - name: Install mise tools
   ansible.builtin.command:
