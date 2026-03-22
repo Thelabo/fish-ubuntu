@@ -10,6 +10,9 @@
     - name: Include package installation tasks
       ansible.builtin.include_tasks: tasks/packages.yml
 
+    - name: Include stow dotfile linking tasks
+      ansible.builtin.include_tasks: tasks/stow.yml
+
     - name: Include latest tool installation tasks
       ansible.builtin.include_tasks: tasks/latest-tools.yml
 

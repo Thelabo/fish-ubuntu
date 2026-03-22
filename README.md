@@ -44,6 +44,16 @@ To avoid stale LTS package versions:
 
 These are automated in the Ansible playbook.
 
+## Dotfiles linking with GNU Stow
+
+The playbook installs `stow` and, by default, applies links from this repo to your home directory:
+
+```bash
+stow --dir <repo-root> --target "$HOME" --restow .config
+```
+
+This keeps `~/.config/fish` sourced from the repo structure while remaining easy to re-apply.
+
 ## Fish plugins
 
 Plugins are installed through Fisher by the playbook:
@@ -71,6 +81,7 @@ Optional toggles (defaults shown):
 
 - `latest_tools_enabled=true`
 - `install_fastfetch_from_ppa=false`
+- `stow_dotfiles=true`
 - `install_fish_pure=true`
 - `install_fish_autopair=true`
 - `install_done_fish=false`
