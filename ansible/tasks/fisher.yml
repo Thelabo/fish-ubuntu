@@ -8,9 +8,9 @@
         mode: "0644"
         checksum: "sha256:{{ fisher_bootstrap_sha256 }}"
 
-    - name: Bootstrap Fisher from local script
+    - name: Bootstrap and install Fisher plugin manager
       ansible.builtin.command:
-        cmd: fish -c "source /tmp/fisher_bootstrap.fish"
+        cmd: fish -c "source /tmp/fisher_bootstrap.fish; fisher install jorgebucaran/fisher@{{ fisher_version }}"
         creates: "{{ ansible_facts['user_dir'] }}/.config/fish/functions/fisher.fish"
       changed_when: true
 
