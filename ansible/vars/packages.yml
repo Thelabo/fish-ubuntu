@@ -4,6 +4,8 @@ apt_packages:
   - curl
   - stow
   - hwinfo
+  - fzf
+  - ripgrep
 
 latest_tools_enabled: true
 install_fastfetch_from_ppa: false
