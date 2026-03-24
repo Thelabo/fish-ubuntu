@@ -74,3 +74,45 @@
       ansible.builtin.apt:
         deb: "/tmp/bat_{{ bat_version }}_amd64.deb"
       become: true
+
+- name: Check installed ripgrep version
+  when: latest_tools_enabled | default(true) and auto_install_diverged_github_debs | default(true)
+  ansible.builtin.command:
+    cmd: rg --version
+  register: rg_version_check
+  changed_when: false
+  failed_when: false
+
+- name: Calculate ripgrep version divergence and install strategy
+  when: latest_tools_enabled | default(true) and auto_install_diverged_github_debs | default(true)
+  ansible.builtin.set_fact:
+    rg_installed_version: "{{ ((rg_version_check.stdout_lines | default([])) | first | default('ripgrep 0.0.0')).split(' ')[1] }}"
+
+- name: Decide whether ripgrep divergence warrants GitHub .deb
+  when: latest_tools_enabled | default(true) and auto_install_diverged_github_debs | default(true)
+  ansible.builtin.set_fact:
+    install_ripgrep_from_github: >-
+      {{
+        ((ripgrep_version.split('.')[0] | int) - (rg_installed_version.split('.')[0] | int) > (version_divergence_major_threshold | int))
+        or
+        (
+          ((ripgrep_version.split('.')[0] | int) - (rg_installed_version.split('.')[0] | int) == (version_divergence_major_threshold | int))
+          and
+          ((ripgrep_version.split('.')[1] | int) - (rg_installed_version.split('.')[1] | int) > (version_divergence_minor_threshold | int))
+        )
+      }}
+
+- name: Install pinned ripgrep from GitHub release when divergence is high
+  when: latest_tools_enabled | default(true) and auto_install_diverged_github_debs | default(true) and (install_ripgrep_from_github | default(false))
+  block:
+    - name: Download ripgrep Debian package
+      ansible.builtin.get_url:
+        url: "{{ ripgrep_deb_url }}"
+        dest: "/tmp/ripgrep_{{ ripgrep_version }}_amd64.deb"
+        mode: "0644"
+        checksum: "sha256:{{ ripgrep_deb_sha256 }}"
+
+    - name: Install ripgrep Debian package
+      ansible.builtin.apt:
+        deb: "/tmp/ripgrep_{{ ripgrep_version }}_amd64.deb"
+      become: true

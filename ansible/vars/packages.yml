@@ -8,6 +8,9 @@ apt_packages:
   - ripgrep
 
 latest_tools_enabled: true
+auto_install_diverged_github_debs: true
+version_divergence_major_threshold: 0
+version_divergence_minor_threshold: 5
 install_fastfetch_from_ppa: false
 stow_dotfiles: true
 stow_repo_dir: "{{ playbook_dir }}/.."
@@ -25,6 +28,10 @@ bat_deb_sha256: "ad59954aa1540e526f97267f60557ea5ef4c7dcf91a0811254134537cb353a3
 fastfetch_version: "2.60.0"
 fastfetch_deb_url: "https://github.com/fastfetch-cli/fastfetch/releases/download/2.60.0/fastfetch-linux-amd64.deb"
 fastfetch_deb_sha256: "f24aa1187c544250177d1329a7abc0c31ee9f06ec8e6cbba1ad57a2ddc4eec25"
+fzf_latest_version: "0.70.0"
+ripgrep_version: "15.1.0"
+ripgrep_deb_url: "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep_15.1.0-1_amd64.deb"
+ripgrep_deb_sha256: "62ce186675c71edbc7c48a67dc36f986974551354d6ce63726adc2d85aad802c"
 
 install_done_fish: false
 

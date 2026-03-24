@@ -3,14 +3,14 @@
   block:
     - name: Verify configured stow repository contains fish config
       ansible.builtin.stat:
-        path: "{{ (stow_repo_dir | default(playbook_dir ~ '/..')) ~ '/.config/fish/config.fish' }}"
-      register: stow_repo_config
+        path: "{{ (stow_repo_dir | default(playbook_dir ~ '/..')) ~ '/fish/config.fish' }}"
+      register: stow_repo_fish_package
 
     - name: Fail when stow repository path is invalid
       ansible.builtin.assert:
         that:
-          - stow_repo_config.stat.exists
-        fail_msg: "stow_repo_dir must point to your repo root (example: ~/git/ubuntu-fish)."
+          - stow_repo_fish_package.stat.exists
+        fail_msg: "stow_repo_dir must contain fish/config.fish."
 
     - name: Ensure ~/.config exists before stow
       ansible.builtin.file:
@@ -26,5 +26,5 @@
 
     - name: Apply stow links from repository root
       ansible.builtin.command:
-        cmd: "stow --dir {{ stow_repo_dir | default(playbook_dir ~ '/..') }} --target {{ ansible_facts['user_dir'] }} --restow .config"
+        cmd: "stow --dir {{ stow_repo_dir | default(playbook_dir ~ '/..') }} --target {{ ansible_facts['user_dir'] }}/.config --restow fish"
       changed_when: false

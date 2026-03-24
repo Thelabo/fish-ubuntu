@@ -40,6 +40,7 @@ To avoid stale LTS package versions:
 - `eza`: install from upstream apt repo (`deb.gierens.de`) with scoped apt key (`signed-by`)
 - `fastfetch`: install pinned `.deb` from GitHub releases with SHA256 verification (optional PPA remains available)
 - `bat`: install pinned `.deb` from GitHub releases with SHA256 verification
+- `ripgrep`: auto-upgrade to pinned GitHub `.deb` when installed version diverges beyond threshold
 - `mise`: install from official signed apt repository (`https://mise.jdx.dev/deb`)
 
 These are automated in the Ansible playbook.
@@ -53,6 +54,10 @@ stow --dir <repo-root> --target "$HOME" --restow .config
 ```
 
 This keeps `~/.config/fish` sourced from the repo structure while remaining easy to re-apply.
+
+Stow expects the fish package-style layout:
+
+- `fish/config.fish` (target `~/.config`)
 
 If your clone path differs, set `stow_repo_dir` to your repo root, for example:
 
@@ -88,6 +93,9 @@ ansible-playbook ansible/site.yml -i ansible/inventory.ini -e install_done_fish=
 Optional toggles (defaults shown):
 
 - `latest_tools_enabled=true`
+- `auto_install_diverged_github_debs=true`
+- `version_divergence_major_threshold=0`
+- `version_divergence_minor_threshold=5`
 - `install_fastfetch_from_ppa=false`
 - `stow_dotfiles=true`
 - `stow_repo_dir={{ playbook_dir }}/..`
